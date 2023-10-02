@@ -53,3 +53,46 @@ const carta = (pokemon) => {
 
     return card;
 };
+
+
+// Función para mostrar el modal con los detalles del Pokémon
+const detalles = async (id) => {
+    const pokemonData = await getPokemon(id);
+    if (!pokemonData) return;
+
+    const { data, apiUrl } = pokemonData;
+    titulo.textContent = data.name;
+
+    modalCont.innerHTML = `
+        <p>ID: ${data.id}</p>
+        <p>Tipo(s): ${data.types.map(type => type.type.name).join(', ')}</p>
+        <p>Peso: ${data.weight}</p>
+        <p>Altura: ${data.height}</p>
+        <h4>Estadísticas:</h4>
+        <ul>
+            ${data.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
+        </ul>
+        <h4>Movimientos:</h4>
+        <ul>
+            ${data.moves.map(move => `<li>${move.move.name}</li>`).join('')}
+        </ul>
+    `;
+
+    modal.classList.add('is-active');
+
+    // Actualizar la URL en el elemento HTML
+    apiUrlElement.textContent = apiUrl;
+};
+
+// cerrar la modal
+modal.addEventListener('click', (event) => {
+    if (event.target.classList.contains('modal-close')) {
+        modal.classList.remove('is-active');
+    }
+});
+
+
+// Inicializar la aplicación al cargar la página
+window.addEventListener('load', () => {
+    cantidadPokemon();
+});
