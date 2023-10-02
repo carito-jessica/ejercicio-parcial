@@ -37,7 +37,7 @@ const carta = (pokemon) => {
     card.classList.add('pokemon-card');
     card.innerHTML = `
         <h3>${pokemon.name}</h3>
-        <p> <span class="api-url"></span></p> 
+        <h3> <span class="api-url"></span></h3> 
         <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
         <button class="view-details" data-pokemon-id="${pokemon.id}">Ver Más</button>
     `;
@@ -64,6 +64,7 @@ const detalles = async (id) => {
     titulo.textContent = data.name;
 
     modalCont.innerHTML = `
+    <img src="${data.sprites.front_default}" alt="${data.name}">
         <p>ID: ${data.id}</p>
         <p>Tipo(s): ${data.types.map(type => type.type.name).join(', ')}</p>
         <p>Peso: ${data.weight}</p>
